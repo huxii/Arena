@@ -21,11 +21,6 @@ public class SharkyBehavior : EnemyBehavior
         Fire();
     }
 
-    void OnDestroy()
-    {
-        gameController.PlaySound(MainControl.SoundsRef.SHARKYDESTROY);
-    }
-
     protected override void MoveAsPattern()
     {
         angle += Time.deltaTime * patternRadius;
@@ -41,5 +36,11 @@ public class SharkyBehavior : EnemyBehavior
     protected override void MovementUpdate()
     {
 
+    }
+
+    public override void ReceiveDamage()
+    {
+        gameController.PlaySound(MainControl.SoundsRef.SHARKYDESTROY);
+        Destroy(gameObject);
     }
 }

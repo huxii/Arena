@@ -21,11 +21,6 @@ public class FishyBehavior : EnemyBehavior
         Fire();
     }
 
-    void OnDestroy()
-    {
-        gameController.PlaySound(MainControl.SoundsRef.FISHYDESTROY);
-    }
-
     protected override void MoveAsPattern()
     {
         Vector3 pos = shipTrans.localPosition;
@@ -42,5 +37,11 @@ public class FishyBehavior : EnemyBehavior
     protected override void MovementUpdate()
     {
 
+    }
+
+    public override void ReceiveDamage()
+    {
+        gameController.PlaySound(MainControl.SoundsRef.FISHYDESTROY);
+        Destroy(gameObject);
     }
 }

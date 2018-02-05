@@ -30,7 +30,7 @@ public class BulletBehavior : MonoBehaviour
 
         if (gameObject.CompareTag("Bullet") && other.gameObject.CompareTag("AI"))
         {
-            Destroy(other.gameObject.transform.parent.gameObject);
+            other.transform.parent.gameObject.GetComponent<EnemyBehavior>().ReceiveDamage();
             Destroy(gameObject);
         }
     }

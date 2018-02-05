@@ -91,4 +91,8 @@ public class EnemyBehavior : MonoBehaviour
     protected virtual void MovementUpdate()
     {
     }
+
+    public virtual void ReceiveDamage()
+    {
+    }
 }
