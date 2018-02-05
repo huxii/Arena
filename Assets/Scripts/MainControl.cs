@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class MainControl : MonoBehaviour
 {
+    public enum ControlScheme
+    {
+        KEYBOARD = 1,
+        MOUSE = 2,
+    };
+
     [Header("Prefabs")]
     public List<GameObject> enemyPrefabs;
 
     [Header("Attributes")]
+    public ControlScheme controlScheme = ControlScheme.KEYBOARD;
     public int maxEnemyNum = 5;
     public float spawnX = 8f;
     public float spawnY = 5f;
