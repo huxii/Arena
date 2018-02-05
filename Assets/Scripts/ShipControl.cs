@@ -6,21 +6,31 @@ public class ShipControl : MonoBehaviour
 {
     public enum ControlScheme
     {
-        KEYBOARD = 1, 
+        KEYBOARD = 1,
     };
+
+    [Header("Prefabs")]
+    public GameObject bulletPrefab;
+
+    [Header("Attributes")]
     public ControlScheme controlScheme = ControlScheme.KEYBOARD;
     public float moveSpeed = 1f;
     public float rotationSpeed = 1f;
+    public float bulletSpeed = 10f;
+    public float fireCD = 0.2f;
 
+    [Header("Debug")]
     MainControl gameController;
     Rigidbody2D rb;
+    float fireCDTimer;
 
 	// Use this for initialization
 	void Start ()
     {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
         rb = GetComponent<Rigidbody2D>();
-	}
+        fireCDTimer = 0;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -30,9 +40,18 @@ public class ShipControl : MonoBehaviour
             KeyboardRotationUpdate();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (fireCDTimer > 0)
         {
-            gameController.Fire(transform.position, ShipForwardDirection());
+            fireCDTimer -= Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (fireCDTimer <= 0)
+            {
+                gameController.Fire(bulletPrefab, transform.position, ShipForwardDirection(), bulletSpeed);
+                fireCDTimer = fireCD;
+            }
         }
 	}
     /*

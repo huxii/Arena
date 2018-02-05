@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletControl : MonoBehaviour
+public class BulletBehavior : MonoBehaviour
 {
-    public float speed = 10f;
-
+    MainControl gameController;
     Rigidbody2D rb;
 
     // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
     }
 
     // Update is called once per frame
@@ -22,14 +22,20 @@ public class BulletControl : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.tag);
+        //Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("Finish"))
         {
             Destroy(gameObject);
         }
+
+        if (gameObject.CompareTag("Bullet") && other.gameObject.CompareTag("AI"))
+        {
+            other.gameObject.transform.parent.gameObject.GetComponent<EnemyBehavior>().Die();
+            Destroy(gameObject);
+        }
     }
 
-    public void SetDirection(Vector3 dir)
+    public void SetDirection(Vector3 dir, float speed)
     {
         GetComponent<Rigidbody2D>().velocity = dir * speed;
     }
