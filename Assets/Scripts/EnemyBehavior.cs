@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    [Header("Prefabs")]
-    public GameObject bulletPrefab;
-
     [Header("Attributes")]
     public float detectionRange = 5f;
     public float speed = 2f;
@@ -18,7 +15,7 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField]
     protected GameObject player;
     protected Transform shipTrans;
-    protected MainControl gameController;
+    protected EnemyControl enemyController;
 
     float fireCDTimer = 0;
 
@@ -36,7 +33,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         shipTrans = transform.GetChild(0).transform;
         player = GameObject.FindGameObjectWithTag("Player");
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
+        enemyController = GameObject.FindGameObjectWithTag("GameController").GetComponent<EnemyControl>();
     }
 
     protected void MoveTo(Vector3 des)
@@ -65,16 +62,11 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    protected void FireAt(Vector3 des)
-    {
-        gameController.Fire(bulletPrefab, shipTrans.transform.position, des - shipTrans.transform.position, bulletSpeed);
-    }
-
     protected void Fire()
     {
         if (fireCDTimer <= 0)
         {
-            FireAt(player.transform.position);
+            enemyController.FireAt(MainControl.BulletRef.ENEMY_NORMAL, shipTrans.transform.position, player.transform.position, bulletSpeed);
             fireCDTimer = fireCD;
         }
         else
@@ -82,6 +74,11 @@ public class EnemyBehavior : MonoBehaviour
         {
             fireCDTimer -= Time.deltaTime;
         }
+    }
+
+    protected void PlaySound(MainControl.SoundsRef idx)
+    {
+        enemyController.PlaySound(idx);
     }
 
     protected virtual void MoveAsPattern()

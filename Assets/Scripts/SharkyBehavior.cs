@@ -10,7 +10,7 @@ public class SharkyBehavior : EnemyBehavior
     void Start()
     {
         Init();
-        gameController.PlaySound(MainControl.SoundsRef.SHARKYCREATE);
+        PlaySound(MainControl.SoundsRef.SHARKY_CREATE);
     }
 	
 	// Update is called once per frame
@@ -40,7 +40,7 @@ public class SharkyBehavior : EnemyBehavior
 
     public override void ReceiveDamage()
     {
-        gameController.PlaySound(MainControl.SoundsRef.SHARKYDESTROY);
+        PlaySound(MainControl.SoundsRef.SHARKY_DESTROY);
         Destroy(gameObject);
     }
 }

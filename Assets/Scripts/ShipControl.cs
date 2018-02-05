@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ShipControl : MonoBehaviour
 {
-    [Header("Prefabs")]
-    public GameObject bulletPrefab;
-
     [Header("Attributes")]
     public float moveSpeed = 1f;
     public float rotationSpeed = 1f;
@@ -60,7 +57,7 @@ public class ShipControl : MonoBehaviour
         {
             if (fireCDTimer <= 0)
             {
-                gameController.Fire(bulletPrefab, transform.position, ShipForwardDirection(), bulletSpeed);
+                gameController.FireAt(MainControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
                 fireCDTimer = fireCD;
             }
         }
@@ -105,7 +102,7 @@ public class ShipControl : MonoBehaviour
         {
             if (fireCDTimer <= 0)
             {
-                gameController.Fire(bulletPrefab, transform.position, ShipForwardDirection(), bulletSpeed);
+                gameController.FireAt(MainControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
                 fireCDTimer = fireCD;
             }
         }

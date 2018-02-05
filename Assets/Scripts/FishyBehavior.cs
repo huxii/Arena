@@ -10,7 +10,7 @@ public class FishyBehavior : EnemyBehavior
     void Start()
     {
         Init();
-        gameController.PlaySound(MainControl.SoundsRef.FISHYCREATE);
+        PlaySound(MainControl.SoundsRef.FISHY_CREATE);
     }
 
     // Update is called once per frame
@@ -41,7 +41,7 @@ public class FishyBehavior : EnemyBehavior
 
     public override void ReceiveDamage()
     {
-        gameController.PlaySound(MainControl.SoundsRef.FISHYDESTROY);
+        PlaySound(MainControl.SoundsRef.FISHY_DESTROY);
         Destroy(gameObject);
     }
 }

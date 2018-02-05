@@ -12,37 +12,48 @@ public class MainControl : MonoBehaviour
 
     public enum SoundsRef
     {
-        FISHYCREATE = 0,
-        FISHYDESTROY = 1,
-        SHARKYCREATE = 2,
-        SHARKYDESTROY = 3,
+        FISHY_CREATE = 0,
+        FISHY_DESTROY = 1,
+        SHARKY_CREATE = 2,
+        SHARKY_DESTROY = 3,
+    };
+
+    public enum BulletRef
+    {
+        PLAYER_NORMAL = 0,
+        ENEMY_NORMAL = 1,
     };
 
     [Header("Prefabs")]
-    public GameObject Sounds;
+    public GameObject soundsManager;
+    public GameObject bulletManager;
 
     [Header("Attributes")]
     public ControlScheme controlScheme = ControlScheme.KEYBOARD;
 
+    SoundsControl soundsController;
+    BulletControl bulletController;
+
     // Use this for initialization
     void Start ()
     {
-	}
+        soundsController = soundsManager.GetComponent<SoundsControl>();
+        bulletController = bulletManager.GetComponent<BulletControl>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
 	}
 
-    public void Fire(GameObject bulletPrefab, Vector3 pos, Vector3 dir, float bulletSpeed)
+    public void FireAt(BulletRef bulletIdx, Vector3 pos, Vector3 dir, float bulletSpeed)
     {
-        GameObject bullet = Instantiate(bulletPrefab, pos, Quaternion.identity);
-        bullet.GetComponent<BulletBehavior>().SetDirection(dir, bulletSpeed);
+        bulletController.FireAt(bulletIdx, pos, dir, bulletSpeed);
     }
 
     public void PlaySound(SoundsRef idx)
     {
-        Sounds.GetComponent<SoundsControl>().Play((int)idx);
+        soundsController.Play((int)idx);
     }
 }
 
@@ -50,12 +61,11 @@ public class MainControl : MonoBehaviour
 
 /*
  * 
- *              MainControl
- *             /            \
- *      EnemyControl     ShipControl
- *            |  |              |
- *            |  -----------------------|           
- *      EnemyBehavior              BulletBehavior
+ *                       MainControl
+ *                 /         |          \                   \
+ *      EnemyControl     ShipControl    BulletControl   SoundsControl
+ *            |  |                            |
+ *      EnemyBehavior                   BulletBehavior
  *      /           \
  * SharkyBehavior  FishyBehavior
  */
