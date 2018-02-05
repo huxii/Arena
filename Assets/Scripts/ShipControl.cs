@@ -37,7 +37,7 @@ public class ShipControl : MonoBehaviour
     {
         if (controlScheme == ControlScheme.KEYBOARD)
         {
-            KeyboardRotationUpdate();
+            KeyboardUpdate();
         }
 
         if (fireCDTimer > 0)
@@ -91,39 +91,54 @@ public class ShipControl : MonoBehaviour
         this.transform.eulerAngles = new Vector3(0, 0, angle);
     }
     */
-    void KeyboardRotationUpdate()
+    void KeyboardUpdate()
     {
-        float deg = transform.localEulerAngles.z;
+        Vector3 v = rb.velocity;
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        {
+            v.x = 0;
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
-            deg += rotationSpeed;
+            v.x = -moveSpeed;
         }
         else
         if (Input.GetKey(KeyCode.D))
         {
-            deg -= rotationSpeed;
+            v.x = moveSpeed;
         }
-        transform.localEulerAngles = new Vector3(0, 0, deg);
 
         if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.W))
         {
-            rb.velocity = new Vector2(0, 0);
+            v.y = 0;
         }
 
         if (Input.GetKey(KeyCode.W))
         {
-            rb.velocity = moveSpeed * ShipForwardDirection();
+            v.y = moveSpeed;
         }
         else
         if (Input.GetKey(KeyCode.S))
         {
-            rb.velocity = -moveSpeed * ShipForwardDirection();
+            v.y = -moveSpeed;
         }
+
+        rb.velocity = v;
     }
 
     Vector3 ShipForwardDirection()
     {
         Vector3 v = new Vector3(0, 1f, 0);
+        v = transform.TransformDirection(v);
+        v = v.normalized;
+
+        return v;
+    }
+
+    Vector3 ShipRightDirection()
+    {
+        Vector3 v = new Vector3(1f, 0, 0);
         v = transform.TransformDirection(v);
         v = v.normalized;
 

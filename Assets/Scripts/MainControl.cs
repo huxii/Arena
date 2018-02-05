@@ -46,30 +46,8 @@ public class MainControl : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        float x = 0;
-        float y = 0;
-        int wall = Random.Range(0, 4);
-        switch (wall)
-        {
-            case 0:
-                x = Random.Range(-spawnX, spawnX);
-                y = spawnY;
-                break;
-            case 1:
-                x = spawnX;
-                y = Random.Range(-spawnY, spawnY);
-                break;
-            case 2:
-                x = Random.Range(-spawnX, spawnX);
-                y = -spawnY;
-                break;
-            case 3:
-                x = -spawnX;
-                y = Random.Range(-spawnY, spawnY);
-                break;
-            default:
-                break;
-        }
+        float x = Random.Range(-spawnX, spawnX);
+        float y = spawnY;
 
         int idx = Random.Range(0, enemyPrefabs.Count);
         GameObject prefab = enemyPrefabs[idx];

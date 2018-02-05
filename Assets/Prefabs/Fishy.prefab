@@ -409,7 +409,7 @@ MonoBehaviour:
     type: 2}
   audios: []
   detectionRange: 3
-  speed: 0.2
+  speed: 0.1
   patternRadius: 1
   bulletSpeed: 5
   fireCD: 1
