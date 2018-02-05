@@ -10,8 +10,17 @@ public class MainControl : MonoBehaviour
         MOUSE = 2,
     };
 
+    public enum SoundsRef
+    {
+        FISHYCREATE = 0,
+        FISHYDESTROY = 1,
+        SHARKYCREATE = 2,
+        SHARKYDESTROY = 3,
+    };
+
     [Header("Prefabs")]
     public List<GameObject> enemyPrefabs;
+    public GameObject Sounds;
 
     [Header("Attributes")]
     public ControlScheme controlScheme = ControlScheme.KEYBOARD;
@@ -35,7 +44,7 @@ public class MainControl : MonoBehaviour
             if (GameObject.FindGameObjectsWithTag("AI").Length < maxEnemyNum)
             {
                 SpawnEnemy();
-                spawnCD = Random.Range(5, 10);
+                spawnCD = Random.Range(2, 5);
             }
         }
         else
@@ -59,5 +68,10 @@ public class MainControl : MonoBehaviour
         int idx = Random.Range(0, enemyPrefabs.Count);
         GameObject prefab = enemyPrefabs[idx];
         GameObject enemy = Instantiate(prefab, new Vector3(x, y, 0), Quaternion.identity);
+    }
+
+    public void PlaySound(SoundsRef idx)
+    {
+        Sounds.GetComponent<SoundsControl>().Play((int)idx);
     }
 }

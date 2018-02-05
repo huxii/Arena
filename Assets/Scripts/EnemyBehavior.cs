@@ -6,7 +6,6 @@ public class EnemyBehavior : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject bulletPrefab;
-    public AudioSource[] audios;
 
     [Header("Attributes")]
     public float detectionRange = 5f;
@@ -38,9 +37,6 @@ public class EnemyBehavior : MonoBehaviour
         shipTrans = transform.GetChild(0).transform;
         player = GameObject.FindGameObjectWithTag("Player");
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
-
-        audios = GetComponents<AudioSource>();
-        audios[0].Play();
     }
 
     protected void MoveTo(Vector3 des)
@@ -94,17 +90,5 @@ public class EnemyBehavior : MonoBehaviour
 
     protected virtual void MovementUpdate()
     {
-    }
-
-    public void Die()
-    {
-        audios[1].Play();
-        StartCoroutine(Wait());   
-    }
-
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(0.15f);
-        Destroy(gameObject);
     }
 }
