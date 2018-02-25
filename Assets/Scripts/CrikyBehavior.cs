@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GM;
 
-public class FishyBehavior : EnemyBehavior
+public class CrikyBehavior : EnemyBehavior
 {
     float angle = 0;
 
@@ -10,14 +11,14 @@ public class FishyBehavior : EnemyBehavior
     void Start()
     {
         Init();
-        PlaySound(MainControl.SoundsRef.FISHY_CREATE); 
+        PlaySound(MainControl.SoundsRef.CRIKY_CREATE); 
     }
 
     // Update is called once per frame
     void Update()
     {
         MoveToPlayer();
-        MoveAsPattern();
+        //MoveAsPattern();
         Fire();
     }
 
@@ -39,9 +40,15 @@ public class FishyBehavior : EnemyBehavior
 
     }
 
+    protected override void OnEnemyDestroyed(GM.Event e)
+    {
+        var enemyDestroyedEvent = e as EnemyDestroyed;
+        speed += 0.1f;
+    }
+
     public override void ReceiveDamage()
     {
-        PlaySound(MainControl.SoundsRef.FISHY_DESTROY);
+        PlaySound(MainControl.SoundsRef.CRIKY_DESTROY);
         Destroy(gameObject);
     }
 }

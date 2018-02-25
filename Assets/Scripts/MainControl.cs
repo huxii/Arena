@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GM;
 
 public class MainControl : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class MainControl : MonoBehaviour
         FISHY_DESTROY = 1,
         SHARKY_CREATE = 2,
         SHARKY_DESTROY = 3,
+        CRIKY_CREATE = 4,
+        CRIKY_DESTROY = 5,
     };
 
     public enum BulletRef
@@ -44,7 +47,8 @@ public class MainControl : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	}
+        EventManager.Instance.ProcessQueuedEvents();
+    }
 
     public void FireAt(BulletRef bulletIdx, Vector3 pos, Vector3 dir, float bulletSpeed)
     {
