@@ -39,19 +39,11 @@ public class EnemyBehavior : MonoBehaviour
     {
     }
 
-    void OnDestroy()
-    {
-        EventManager.Instance.QueueEvent(new EnemyDestroyed(gameObject));
-        EventManager.Instance.Unregister<EnemyDestroyed>(OnEnemyDestroyed);
-    }
-
     protected void Init()
     {
         shipTrans = transform.GetChild(0).transform;
         player = GameObject.FindGameObjectWithTag("Player");
         enemyController = GameObject.FindGameObjectWithTag("GameController").GetComponent<EnemyControl>();
-
-        EventManager.Instance.Register<EnemyDestroyed>(OnEnemyDestroyed);
     }
 
     protected void MoveTo(Vector3 des)
@@ -105,11 +97,6 @@ public class EnemyBehavior : MonoBehaviour
 
     protected virtual void MovementUpdate()
     {
-    }
-
-    protected virtual void OnEnemyDestroyed(GM.Event e)
-    {
-
     }
 
     public virtual void ReceiveDamage()

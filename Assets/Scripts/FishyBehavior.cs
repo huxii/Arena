@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GM;
 
 public class FishyBehavior : EnemyBehavior
 {
@@ -19,6 +20,11 @@ public class FishyBehavior : EnemyBehavior
         MoveToPlayer();
         MoveAsPattern();
         Fire();
+    }
+
+    void OnDestroy()
+    {
+        EventManager.Instance.QueueEvent(new EnemyDestroyed(gameObject));
     }
 
     protected override void MoveAsPattern()

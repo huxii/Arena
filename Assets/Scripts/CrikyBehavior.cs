@@ -11,7 +11,8 @@ public class CrikyBehavior : EnemyBehavior
     void Start()
     {
         Init();
-        PlaySound(MainControl.SoundsRef.CRIKY_CREATE); 
+        PlaySound(MainControl.SoundsRef.CRIKY_CREATE);
+        EventManager.Instance.Register<EnemyDestroyed>(OnEnemyDestroyed);
     }
 
     // Update is called once per frame
@@ -20,6 +21,18 @@ public class CrikyBehavior : EnemyBehavior
         MoveToPlayer();
         //MoveAsPattern();
         Fire();
+    }
+
+    void OnDestroy()
+    {
+        EventManager.Instance.QueueEvent(new EnemyDestroyed(gameObject));
+        EventManager.Instance.Unregister<EnemyDestroyed>(OnEnemyDestroyed);
+    }
+
+    void OnEnemyDestroyed(GM.Event e)
+    {
+        var enemyDestroyedEvent = e as EnemyDestroyed;
+        speed += 0.1f;
     }
 
     protected override void MoveAsPattern()
@@ -38,12 +51,6 @@ public class CrikyBehavior : EnemyBehavior
     protected override void MovementUpdate()
     {
 
-    }
-
-    protected override void OnEnemyDestroyed(GM.Event e)
-    {
-        var enemyDestroyedEvent = e as EnemyDestroyed;
-        speed += 0.1f;
     }
 
     public override void ReceiveDamage()
