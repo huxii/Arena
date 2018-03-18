@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50628507444793906}
   m_Layer: 0
   m_Name: Criky_ship
-  m_TagString: AI
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114251274661760790}
   m_Layer: 0
   m_Name: Criky
-  m_TagString: AI
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   patternRadius: 1
   bulletSpeed: 10
   fireCD: 2
-  player: {fileID: 0}
+  gameController: {fileID: 0}
 --- !u!212 &212842972967775140
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -7,8 +7,8 @@ public class MainControl : MonoBehaviour
 {
     public enum ControlScheme
     {
-        KEYBOARD = 1,
-        MOUSE = 2,
+        KEYBOARD = 0,
+        MOUSE = 1,
     };
 
     public enum SoundsRef
@@ -28,37 +28,65 @@ public class MainControl : MonoBehaviour
     };
 
     [Header("Prefabs")]
-    public GameObject soundsManager;
-    public GameObject bulletManager;
+    public List<GameObject> enemyPrefabs;
+    public List<GameObject> bulletPrefabs;
 
     [Header("Attributes")]
     public ControlScheme controlScheme = ControlScheme.KEYBOARD;
+    public int maxEnemyNum = 5;
+    public float spawnX = 8f;
+    public float spawnY = 5f;
 
     SoundsControl soundsController;
-    BulletControl bulletController;
+    float enemyNum; 
 
     // Use this for initialization
     void Start ()
     {
-        soundsController = soundsManager.GetComponent<SoundsControl>();
-        bulletController = bulletManager.GetComponent<BulletControl>();
+        soundsController = GameObject.FindGameObjectWithTag("Sounds").GetComponent<SoundsControl>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
         EventManager.Instance.ProcessQueuedEvents();
+
+        enemyNum = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        SpawnEnemy();
     }
 
     public void FireAt(BulletRef bulletIdx, Vector3 pos, Vector3 dir, float bulletSpeed)
     {
-        bulletController.FireAt(bulletIdx, pos, dir, bulletSpeed);
+        GameObject bullet = Instantiate(bulletPrefabs[(int)bulletIdx], pos, Quaternion.identity);
+        bullet.GetComponent<BulletBehavior>().SetDirection(dir, bulletSpeed);
     }
 
     public void PlaySound(SoundsRef idx)
     {
         soundsController.Play((int)idx);
     }
+
+    public void SpawnEnemy()
+    {
+        if (enemyNum == 0)
+        {
+            for (int i = 0; i < maxEnemyNum; ++i)
+            {
+                float x = Random.Range(-spawnX, spawnX);
+                float y = spawnY;
+
+                int idx = Random.Range(0, enemyPrefabs.Count);
+                GameObject prefab = enemyPrefabs[idx];
+                GameObject enemy = Instantiate(prefab, new Vector3(x, y, 0), Quaternion.identity);
+            }
+        }
+    }
+    /*
+    public void SpawnEnemy()
+    {
+
+    }
+    */
 }
 
 

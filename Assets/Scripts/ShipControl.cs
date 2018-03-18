@@ -30,7 +30,7 @@ public class ShipControl : MonoBehaviour
         {
             fireCDTimer -= Time.deltaTime;
         }
-
+        
         switch (gameController.controlScheme)
         {
             case MainControl.ControlScheme.KEYBOARD:

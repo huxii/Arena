@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50969472166592970}
   m_Layer: 0
   m_Name: Sharky_ship
-  m_TagString: AI
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114634991415580556}
   m_Layer: 0
   m_Name: Sharky
-  m_TagString: AI
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   patternRadius: 3
   bulletSpeed: 3
   fireCD: 2
-  player: {fileID: 0}
+  gameController: {fileID: 0}
 --- !u!212 &212745782283873526
 SpriteRenderer:
   m_ObjectHideFlags: 1

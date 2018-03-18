@@ -366,9 +366,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19d9eaa8ba7b70c45bcd1f23e205ef20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsManager: {fileID: 1680373070}
-  bulletManager: {fileID: 1664820406}
-  controlScheme: 2
+  enemyPrefabs:
+  - {fileID: 1359326071519596, guid: d04e22f2e0c71074aa83c6ab747c4e1a, type: 2}
+  - {fileID: 1964315678091014, guid: d5d6b29f0e1967046b31edb2492093d6, type: 2}
+  - {fileID: 1209168703520182, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+  bulletPrefabs:
+  - {fileID: 1111377228069194, guid: ebb6c7ba45d3d744aac0d5e85b303048, type: 2}
+  - {fileID: 1111377228069194, guid: f7cedc1ff8b50644b849aecfb63df726, type: 2}
+  controlScheme: 1
+  maxEnemyNum: 20
+  spawnX: 8
+  spawnY: 5
 --- !u!4 &518486836
 Transform:
   m_ObjectHideFlags: 0
@@ -390,7 +398,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 518486834}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 291bd99c5cc12a3439695bb8d483692b, type: 3}
   m_Name: 
@@ -608,6 +616,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985613cdea59fe44fa5da4873d2a7254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionRange: 5
+  speed: 2
+  patternRadius: 1
+  bulletSpeed: 10
+  fireCD: 2
+  gameController: {fileID: 0}
 --- !u!1 &960827674
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,7 +744,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1664820407
 Transform:
   m_ObjectHideFlags: 0
@@ -775,7 +789,7 @@ GameObject:
   - component: {fileID: 1680373076}
   m_Layer: 0
   m_Name: SoundsManager
-  m_TagString: Untagged
+  m_TagString: Sounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1369,7 +1383,7 @@ Prefab:
     - target: {fileID: 114794757298826310, guid: 7f1af13048126384b9272a556578f936,
         type: 2}
       propertyPath: controlScheme
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114794757298826310, guid: 7f1af13048126384b9272a556578f936,
         type: 2}

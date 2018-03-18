@@ -4,9 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - AI
   - Bullet
   - EnemyBullet
+  - Enemy
+  - Sounds
   layers:
   - Default
   - TransparentFX

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114541598799832468}
   m_Layer: 0
   m_Name: Fishy
-  m_TagString: AI
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 50108548125912030}
   m_Layer: 0
   m_Name: Fishy_ship
-  m_TagString: AI
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   patternRadius: 1
   bulletSpeed: 5
   fireCD: 1
-  player: {fileID: 0}
+  gameController: {fileID: 0}
 --- !u!212 &212482681720862514
 SpriteRenderer:
   m_ObjectHideFlags: 1

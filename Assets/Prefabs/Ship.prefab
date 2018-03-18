@@ -193,9 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827fef3499653d14ea058f5b273da61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1111377228069194, guid: ebb6c7ba45d3d744aac0d5e85b303048,
-    type: 2}
-  controlScheme: 1
+  controlScheme: 0
   moveSpeed: 3
   rotationSpeed: 5
   bulletSpeed: 30

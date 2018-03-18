@@ -23,9 +23,9 @@ public class EnemyBehavior : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField]
+    protected MainControl gameController;
     protected GameObject player;
     protected Transform shipTrans;
-    protected EnemyControl enemyController;
 
     float fireCDTimer = 0;
 
@@ -41,9 +41,9 @@ public class EnemyBehavior : MonoBehaviour
 
     protected void Init()
     {
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
         shipTrans = transform.GetChild(0).transform;
         player = GameObject.FindGameObjectWithTag("Player");
-        enemyController = GameObject.FindGameObjectWithTag("GameController").GetComponent<EnemyControl>();
     }
 
     protected void MoveTo(Vector3 des)
@@ -76,7 +76,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (fireCDTimer <= 0)
         {
-            enemyController.FireAt(MainControl.BulletRef.ENEMY_NORMAL, shipTrans.transform.position, player.transform.position, bulletSpeed);
+            gameController.FireAt(MainControl.BulletRef.ENEMY_NORMAL, shipTrans.transform.position, player.transform.position, bulletSpeed);
             fireCDTimer = fireCD;
         }
         else
@@ -88,7 +88,7 @@ public class EnemyBehavior : MonoBehaviour
 
     protected void PlaySound(MainControl.SoundsRef idx)
     {
-        enemyController.PlaySound(idx);
+        gameController.PlaySound(idx);
     }
 
     protected virtual void MoveAsPattern()
