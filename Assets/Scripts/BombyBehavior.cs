@@ -12,22 +12,33 @@ public class BombyBehavior : EnemyBehavior
         CHASE,
     }
 
-    readonly TaskManager taskManager = new TaskManager();
+    public float maxHP = 10;
 
+    [SerializeField]
     BossState state = BossState.APPEAR;
     Vector3 location = new Vector3(0, 0, 0);
+
+    float hp;
+    float timer = 0;
 
 	// Use this for initialization
 	void Start ()
     {
-        taskManager.Do(new Scale(gameObject, new Vector3(0.01f, 0.01f, 0.01f), new Vector3(1f, 1f, 1f), 0.5f));
+        Init();
+        gameController.taskManager.Do(new Scale(gameObject, new Vector3(0.01f, 0.01f, 0.01f), new Vector3(1f, 1f, 1f), 1f));
+        hp = maxHP;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        taskManager.Update();
+        //Debug.Log(hp);
+        StateCheck();
+        MoveAsPattern();
+    }
 
+    void StateCheck()
+    {
         switch (state)
         {
             case BossState.APPEAR:
@@ -37,11 +48,54 @@ public class BombyBehavior : EnemyBehavior
                 }
                 break;
             case BossState.SPAWN:
+                gameController.SpawnEnemy(transform.position);
                 break;
             case BossState.FIRE:
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                {
+                    gameController.SpawnBullet(transform.position);
+                    timer = 2f;
+                }
                 break;
             case BossState.CHASE:
+                MoveToPlayer();
+                gameController.SpawnEnemy(transform.position);
                 break;
         }
-	}
+    }
+
+    protected override void MoveAsPattern()
+    {
+        Vector3 pos = shipTrans.localPosition;
+        if (pos.x <= 1)
+        {
+            shipTrans.localPosition = new Vector3(Mathf.PingPong(Time.time, patternRadius), pos.y, pos.z);
+        }
+        else
+        {
+            shipTrans.localPosition = new Vector3(-Mathf.PingPong(Time.time, patternRadius), pos.y, pos.z);
+        }
+    }
+
+    public override void ReceiveDamage()
+    {
+        --hp;
+        if (hp == 0)
+        {
+            PlaySound(MainControl.SoundsRef.FISHY_DESTROY);
+            Destroy(gameObject);
+        }
+        else
+        if (hp <= maxHP * 0.15)
+        {
+            state = BossState.CHASE;
+        }
+        else
+        if (hp <= maxHP * 0.5)
+        {
+            state = BossState.FIRE;
+            gameController.ClearEnemy();
+        }
+    }
 }

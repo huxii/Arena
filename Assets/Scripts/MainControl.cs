@@ -37,6 +37,8 @@ public class MainControl : MonoBehaviour
     public float spawnX = 8f;
     public float spawnY = 5f;
 
+    public readonly TaskManager taskManager = new TaskManager();
+
     SoundsControl soundsController;
     float enemyNum; 
 
@@ -50,8 +52,8 @@ public class MainControl : MonoBehaviour
 	void Update ()
     {
         EventManager.Instance.ProcessQueuedEvents();
+        taskManager.Update();
 
-        enemyNum = GameObject.FindGameObjectsWithTag("Enemy").Length;
         SpawnEnemy();
     }
 
@@ -68,6 +70,7 @@ public class MainControl : MonoBehaviour
 
     public void SpawnEnemy()
     {
+        enemyNum = GameObject.FindGameObjectsWithTag("Enemy").Length + GameObject.FindGameObjectsWithTag("Boss").Length;
         if (enemyNum == 0)
         {
             for (int i = 0; i < maxEnemyNum; ++i)
@@ -81,12 +84,39 @@ public class MainControl : MonoBehaviour
             }
         }
     }
-    /*
-    public void SpawnEnemy()
-    {
 
+    public void SpawnEnemy(Vector3 pos)
+    {
+        enemyNum = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        if (enemyNum == 0)
+        {
+            taskManager.Do(new Spawn(enemyPrefabs[0], transform.position, 0.25f, 2))
+                .Then(new Spawn(enemyPrefabs[1], transform.position, 0.25f, 2))
+                .Then(new Spawn(enemyPrefabs[2], transform.position, 0.25f, 2));
+        }
     }
-    */
+
+    public void SpawnBullet(Vector3 pos)
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            float angle = Random.Range(0, 360);
+            float x = Mathf.Cos(angle);
+            float y = Mathf.Sin(angle);
+            GameObject bullet = Instantiate(bulletPrefabs[(int)BulletRef.ENEMY_NORMAL], pos, Quaternion.identity);
+            bullet.GetComponent<BulletBehavior>().SetDirection(new Vector3(x, y, 0), 3f);
+            angle += 60;
+        }
+    }
+
+    public void ClearEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+    }
 }
 
 

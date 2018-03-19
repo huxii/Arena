@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 /*
 public class ActionTask : Task
 {
@@ -117,8 +118,8 @@ public class Scale : TimedObjectTask
     public Vector3 StartScale { get; private set; }
     public Vector3 EndScale { get; private set; }
 
-    public Scale(GameObject gameObject, Vector3 start, Vector3 end, float duration) :
-        base(gameObject, duration)
+    public Scale(GameObject gameObject, Vector3 start, Vector3 end, float duration) 
+        : base(gameObject, duration)
     {
         StartScale = start;
         EndScale = end;
@@ -127,5 +128,74 @@ public class Scale : TimedObjectTask
     protected override void OnTick(float t)
     {
         gameObject.transform.localScale = Vector3.Lerp(StartScale, EndScale, t);
+    }
+
+    protected override void OnElapsed()
+    {
+        base.OnElapsed();
+        gameObject.transform.localScale = EndScale;
+    }
+}
+
+public class SequenceTask : Task
+{
+    public float Interval { get; private set; }
+    public float Number { get; private set; }
+
+    float timer;
+    float counter;
+
+    protected SequenceTask(float interval, int number)
+    {
+        Interval = interval;
+        Number = number;
+    }
+
+    protected override void Init()
+    {
+        timer = 0;
+        counter = 0;
+    }
+
+    internal override void Update()
+    {
+        if (timer <= 0)
+        {
+            OnTick();
+            timer = Interval;
+
+            ++counter;
+            if (counter >= Number)
+            {
+                OnFinished();
+            }
+        }
+
+        timer -= Time.deltaTime;
+    }
+
+    protected virtual void OnTick() { }
+
+    protected virtual void OnFinished()
+    {
+        SetStatus(TaskStatus.SUCCESS);
+    }
+}
+
+public class Spawn : SequenceTask
+{
+    protected readonly GameObject gameObject;
+    public Vector3 spawnPos { get; private set; }
+
+    public Spawn(GameObject gameObject, Vector3 pos, float interval, int number)
+        : base(interval, number)
+    {
+        this.gameObject = gameObject;
+        spawnPos = pos;
+    }
+
+    protected override void OnTick()
+    {
+        GameObject newSpawn = GameObject.Instantiate(gameObject, spawnPos, Quaternion.identity);
     }
 }
