@@ -11,6 +11,7 @@ public class CrikyBehavior : EnemyBehavior
     void Start()
     {
         Init();
+        InitBehaviorTree();
         PlaySound(MainControl.SoundsRef.CRIKY_CREATE);
         EventManager.Instance.Register<EnemyDestroyed>(OnEnemyDestroyed);
     }
@@ -18,9 +19,10 @@ public class CrikyBehavior : EnemyBehavior
     // Update is called once per frame
     void Update()
     {
-        MoveToPlayer();
-        //MoveAsPattern();
-        Fire();
+        btree.Update(this);
+        //MoveToPlayer();
+        MoveAsPattern();
+        //Fire();
     }
 
     void OnDestroy()

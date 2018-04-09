@@ -397,65 +397,40 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4416232134151554, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    - target: {fileID: 4579715878892490, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
       propertyPath: m_LocalPosition.x
       value: -0.99
       objectReference: {fileID: 0}
-    - target: {fileID: 4416232134151554, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    - target: {fileID: 4579715878892490, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0.11
       objectReference: {fileID: 0}
-    - target: {fileID: 4416232134151554, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    - target: {fileID: 4579715878892490, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4416232134151554, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    - target: {fileID: 4579715878892490, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4416232134151554, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    - target: {fileID: 4579715878892490, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4416232134151554, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    - target: {fileID: 4579715878892490, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4416232134151554, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    - target: {fileID: 4579715878892490, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4416232134151554, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    - target: {fileID: 4579715878892490, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1209168703520182, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
-      propertyPath: m_Name
-      value: Bomby
-      objectReference: {fileID: 0}
-    - target: {fileID: 4231100532958942, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4231100532958942, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4231100532958942, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1209168703520182, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
-      propertyPath: m_TagString
-      value: Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 1030928700029412, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
-      propertyPath: m_TagString
-      value: Boss
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114251274661760790, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
-  m_ParentPrefab: {fileID: 100100000, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d2f24cb4a8e89604291da05402bba71e, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &596141459
 GameObject:
@@ -645,30 +620,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &1385946935 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1209168703520182, guid: f11791bc225fcc844ba39252d1a566b5,
-    type: 2}
-  m_PrefabInternal: {fileID: 549638357}
---- !u!114 &1385946936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1385946935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985613cdea59fe44fa5da4873d2a7254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRange: 5
-  speed: 2
-  patternRadius: 1
-  bulletSpeed: 10
-  fireCD: 2
-  gameController: {fileID: 0}
-  maxHP: 10
-  state: 0
 --- !u!1 &1680373070
 GameObject:
   m_ObjectHideFlags: 0

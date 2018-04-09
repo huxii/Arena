@@ -243,8 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8abd2b90eceeedb448f1d0d7cf7a7c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 5
-  speed: 0.1
+  detectionRange: 10
+  speed: 0.5
   patternRadius: 1
   bulletSpeed: 10
   fireCD: 2
