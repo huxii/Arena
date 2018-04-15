@@ -16,7 +16,8 @@ public class EnemyDestroyed : GM.Event
 public class EnemyBehavior : MonoBehaviour
 {
     [Header("Attributes")]
-    public float detectionRange = 5f;
+    public float fleeRange = 4f;
+    public float attackRange = 6f;
     public float speed = 2f;
     public float patternRadius = 1f;
     public float bulletSpeed = 10f;
@@ -54,20 +55,25 @@ public class EnemyBehavior : MonoBehaviour
         btree = new Tree<EnemyBehavior>(new Selector<EnemyBehavior>(
 
             // (highest priority)
+            // Fight Behavior
+            // If we don't need to run then fight...
+
             // Flee Behavior
             new Sequence<EnemyBehavior>( // We use a sequence here since this is effectively a checklist...
                                          // Sequences fail as soon as a child fails so they're a good way to check
                                          // a bunch of conditions before doing something
-                new IsInDanger(), // If the enemy has taken a lot of damage AND...
-                new IsPlayerInRange(), // the player is in range...
-                new Flee() // then run away
+                new ShouldFlee(),
+                new Flee()              // then run away
             ),
 
-            // Fight Behavior
-            // If we don't need to run then fight...
+            new Sequence<EnemyBehavior>(
+                new ShouldApproach(),
+                new Approach()
+            ),
+
             new Sequence<EnemyBehavior>( // Another sequence to check pre-conditions
-                new IsPlayerInRange(), // If the player is in range...
-                new Attack() // Attack
+                new CanAttack(),        // If the player is in range...
+                new Attack()            // Attack
             ),
 
             // (lowest priority)
@@ -77,35 +83,7 @@ public class EnemyBehavior : MonoBehaviour
         ));
     }
 
-    protected void InitBossBehaviorTree()
-    {
-        // We define the tree and use a selector at the root to pick the high level behavior (i.e. fight, flight or idle)
-        btree = new Tree<EnemyBehavior>(new Selector<EnemyBehavior>(
-
-            // (highest priority)
-            // Flee Behavior
-            new Sequence<EnemyBehavior>( // We use a sequence here since this is effectively a checklist...
-                                         // Sequences fail as soon as a child fails so they're a good way to check
-                                         // a bunch of conditions before doing something
-                new IsInDanger(), // If the enemy has taken a lot of damage AND...
-                new IsPlayerInRange(), // the player is in range...
-                new Flee() // then run away
-            ),
-
-            // Fight Behavior
-            // If we don't need to run then fight...
-            new Sequence<EnemyBehavior>( // Another sequence to check pre-conditions
-                new IsPlayerInRange(), // If the player is in range...
-                new Attack() // Attack
-            ),
-
-            // (lowest priority)
-            // Idle behavior
-            // The idle behavior is on the bottom of list so if everything else fails we'll end up here
-            new Idle()
-        ));
-    }
-
+    /*
     protected void MoveTo(Vector3 des)
     {
         Vector3 dir = des - transform.position;
@@ -117,26 +95,36 @@ public class EnemyBehavior : MonoBehaviour
     {
         MoveTo(player.transform.position);
     }
+    */
 
-    protected bool PlayerDetected()
+    protected void MoveTowardsPlayer()
+    {
+        var playerDirection = (player.transform.position - transform.position).normalized;
+        var body = GetComponent<Rigidbody2D>();
+        body.MovePosition(transform.position + playerDirection * speed * Time.deltaTime);
+    }
+
+    protected void MoveAwayFromPlayer()
+    {
+        //var fleeDirection = (transform.position - player.transform.position).normalized;
+        var fleeDirection = new Vector3(0, 1, 0);
+        float angle = Random.Range(-90f, 90f);
+        fleeDirection = Quaternion.Euler(0, 0, angle) * fleeDirection;
+        var body = GetComponent<Rigidbody2D>();
+        body.AddForce(fleeDirection * speed, ForceMode2D.Impulse);
+    }
+
+    protected float PlayerDistance()
     {
         Vector3 dir = player.transform.position - transform.position;
-        Debug.Log(dir.magnitude);
-        if (dir.magnitude < detectionRange)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return dir.magnitude;
     }
 
     protected void Fire()
     {
         if (fireCDTimer <= 0)
         {
-            gameController.FireAt(MainControl.BulletRef.ENEMY_NORMAL, shipTrans.transform.position, player.transform.position, bulletSpeed);
+            gameController.FireAt(MainControl.BulletRef.ENEMY_NORMAL, transform.position, player.transform.position - transform.position, bulletSpeed);
             fireCDTimer = fireCD;
         }
         else
@@ -155,29 +143,17 @@ public class EnemyBehavior : MonoBehaviour
     {
     }
 
-    protected void MoveTowardsPlayer()
-    {
-        MoveTo(player.transform.position);
-        /*
-        var playerDirection = (player.transform.position - transform.position).normalized;
-        var body = GetComponent<Rigidbody2D>();
-        body.AddForce(playerDirection * speed, ForceMode2D.Impulse);
-        */
-    }
-
-    protected void MoveAwayFromPlayer()
-    {
-        var fleeDirection = (transform.position - player.transform.position).normalized;
-        var body = GetComponent<Rigidbody2D>();
-        body.AddForce(fleeDirection * speed, ForceMode2D.Impulse);
-    }
-
     protected virtual void MovementUpdate()
     {
     }
 
     public virtual void ReceiveDamage()
     {
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log(other.gameObject.name);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,22 +163,27 @@ public class EnemyBehavior : MonoBehaviour
     ////////////////////
     // Conditions
     ////////////////////
-    private class IsInDanger : Node<EnemyBehavior>
+    private class ShouldFlee : Node<EnemyBehavior>
     {
         public override bool Update(EnemyBehavior enemy)
         {
-            //return enemy._health < MaxHealth / 4;
-            return false;
+            return enemy.PlayerDistance() < enemy.fleeRange;
         }
     }
 
-    private class IsPlayerInRange : Node<EnemyBehavior>
+    private class ShouldApproach : Node<EnemyBehavior>
     {
         public override bool Update(EnemyBehavior enemy)
         {
-            var playerPos = enemy.player.transform.position;
-            var enemyPos = enemy.transform.position;
-            return Vector3.Distance(playerPos, enemyPos) < enemy.detectionRange;
+            return enemy.PlayerDistance() > enemy.attackRange;
+        }
+    }
+
+    private class CanAttack : Node<EnemyBehavior>
+    {
+        public override bool Update(EnemyBehavior enemy)
+        {
+            return enemy.PlayerDistance() < enemy.attackRange;
         }
     }
 
@@ -219,12 +200,22 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
+    private class Approach : Node<EnemyBehavior>
+    {
+        public override bool Update(EnemyBehavior enemy)
+        {
+            //enemy.SetColor(Color.yellow);
+            enemy.MoveTowardsPlayer();
+            return true;
+        }
+    }
+
     private class Attack : Node<EnemyBehavior>
     {
         public override bool Update(EnemyBehavior enemy)
         {
             //enemy.SetColor(Color.red);
-            enemy.MoveTowardsPlayer();
+            enemy.Fire();
             return true;
         }
     }

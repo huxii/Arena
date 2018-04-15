@@ -25,7 +25,7 @@ public class BombyBehavior : EnemyBehavior
 	void Start ()
     {
         Init();
-        //InitBossBehaviorTree();
+
         gameController.taskManager.Do(new Scale(gameObject, new Vector3(0.01f, 0.01f, 0.01f), new Vector3(1f, 1f, 1f), 1f));
         hp = maxHP;
     }
@@ -33,7 +33,7 @@ public class BombyBehavior : EnemyBehavior
 	// Update is called once per frame
 	void Update ()
     {
-        //Debug.Log(hp);
+        Debug.Log(hp);
         StateCheck();
         MoveAsPattern();
     }
@@ -60,7 +60,7 @@ public class BombyBehavior : EnemyBehavior
                 }
                 break;
             case BossState.CHASE:
-                MoveToPlayer();
+                MoveTowardsPlayer();
                 gameController.SpawnEnemy(transform.position);
                 break;
         }
@@ -71,11 +71,11 @@ public class BombyBehavior : EnemyBehavior
         Vector3 pos = shipTrans.localPosition;
         if (pos.x <= 1)
         {
-            shipTrans.localPosition = new Vector3(Mathf.PingPong(Time.time, patternRadius), pos.y, pos.z);
+            shipTrans.localPosition = new Vector3(Mathf.PingPong(Time.time, patternRadius), 0, 0);
         }
         else
         {
-            shipTrans.localPosition = new Vector3(-Mathf.PingPong(Time.time, patternRadius), pos.y, pos.z);
+            shipTrans.localPosition = new Vector3(-Mathf.PingPong(Time.time, patternRadius), 0, 0);
         }
     }
 

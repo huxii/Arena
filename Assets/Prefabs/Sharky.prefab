@@ -85,8 +85,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 2
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -243,8 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0639d81990111fb4783227efc6e55956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 10
-  speed: 0.5
+  fleeRange: 2
+  attackRange: 3
+  speed: 2
   patternRadius: 3
   bulletSpeed: 3
   fireCD: 2

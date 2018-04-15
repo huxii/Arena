@@ -28,6 +28,7 @@ public class MainControl : MonoBehaviour
     };
 
     [Header("Prefabs")]
+    public List<GameObject> scenePrefabs;
     public List<GameObject> enemyPrefabs;
     public List<GameObject> bulletPrefabs;
 
@@ -38,6 +39,7 @@ public class MainControl : MonoBehaviour
     public float spawnY = 5f;
 
     public readonly TaskManager taskManager = new TaskManager();
+    public static SceneManager<TransitionData> scenes;
 
     SoundsControl soundsController;
     float enemyNum; 
@@ -46,6 +48,16 @@ public class MainControl : MonoBehaviour
     void Start ()
     {
         soundsController = GameObject.FindGameObjectWithTag("Sounds").GetComponent<SoundsControl>();
+        scenes = new SceneManager<TransitionData>(gameObject, scenePrefabs);
+    }
+
+    void Awake()
+    {
+        GameObject[] enemyTrash = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemyTrash)
+        {
+            Destroy(enemy);
+        }
     }
 	
 	// Update is called once per frame
