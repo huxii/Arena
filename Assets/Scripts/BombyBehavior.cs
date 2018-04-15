@@ -26,7 +26,7 @@ public class BombyBehavior : EnemyBehavior
     {
         Init();
 
-        gameController.taskManager.Do(new Scale(gameObject, new Vector3(0.01f, 0.01f, 0.01f), new Vector3(1f, 1f, 1f), 1f));
+        Services.tasks.Do(new Scale(gameObject, new Vector3(0.01f, 0.01f, 0.01f), new Vector3(1f, 1f, 1f), 1f));
         hp = maxHP;
     }
 	

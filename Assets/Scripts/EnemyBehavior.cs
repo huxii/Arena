@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GM;
 using BehaviorTree;
 
-public class EnemyDestroyed : GM.Event
+public class EnemyDestroyed : Event
 {
     public readonly GameObject enemy;
     public EnemyDestroyed(GameObject e)

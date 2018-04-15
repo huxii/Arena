@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GM;
 
 public class MainControl : MonoBehaviour
 {
@@ -38,20 +37,18 @@ public class MainControl : MonoBehaviour
     public float spawnX = 8f;
     public float spawnY = 5f;
 
-    public readonly TaskManager taskManager = new TaskManager();
-    public static SceneManager<TransitionData> scenes;
-
-    SoundsControl soundsController;
     float enemyNum; 
 
     // Use this for initialization
-    void Start ()
+    void Awake ()
     {
-        soundsController = GameObject.FindGameObjectWithTag("Sounds").GetComponent<SoundsControl>();
-        scenes = new SceneManager<TransitionData>(gameObject, scenePrefabs);
+        Services.sounds = GameObject.FindGameObjectWithTag("Sounds").GetComponent<SoundsControl>();
+        Services.tasks = new TaskManager();
+        Services.events = new EventManager();
+        Services.scenes = new SceneManager<TransitionData>(gameObject, scenePrefabs);
     }
 
-    void Awake()
+    void Start()
     {
         GameObject[] enemyTrash = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemyTrash)
@@ -63,8 +60,8 @@ public class MainControl : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        EventManager.Instance.ProcessQueuedEvents();
-        taskManager.Update();
+        Services.events.ProcessQueuedEvents();
+        Services.tasks.Update();
 
         SpawnEnemy();
     }
@@ -77,7 +74,7 @@ public class MainControl : MonoBehaviour
 
     public void PlaySound(SoundsRef idx)
     {
-        soundsController.Play((int)idx);
+        Services.sounds.Play((int)idx);
     }
 
     public void SpawnEnemy()
@@ -102,7 +99,7 @@ public class MainControl : MonoBehaviour
         enemyNum = GameObject.FindGameObjectsWithTag("Enemy").Length;
         if (enemyNum == 0)
         {
-            taskManager.Do(new Spawn(enemyPrefabs[0], transform.position, 0.25f, 2))
+            Services.tasks.Do(new Spawn(enemyPrefabs[0], transform.position, 0.25f, 2))
                 .Then(new Spawn(enemyPrefabs[1], transform.position, 0.25f, 2))
                 .Then(new Spawn(enemyPrefabs[2], transform.position, 0.25f, 2));
         }

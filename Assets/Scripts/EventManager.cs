@@ -3,85 +3,83 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GM
+public abstract class Event
 {
-    public abstract class Event
+    public delegate void Handler(Event e);
+}
+
+public class EventManager
+{
+    /*
+    private static EventManager instance;
+    public static EventManager Instance
     {
-        public delegate void Handler(Event e);
+        get
+        {
+            if (instance == null)
+            {
+                instance = new EventManager();
+            }
+            return instance;
+        }
+    }
+    */
+    private Dictionary<System.Type, Event.Handler> registeredHandlers
+        = new Dictionary<System.Type, Event.Handler>();
+    private List<Event> queuedEvents = new List<Event>();
+
+    public void QueueEvent(Event e)
+    {
+        queuedEvents.Insert(0, e);
     }
 
-    public class EventManager
+    public void ProcessQueuedEvents()
     {
-        private static EventManager instance;
-        public static EventManager Instance
+        for (int i = queuedEvents.Count - 1; i >= 0; --i)
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new EventManager();
-                }
-                return instance;
-            }
+            Fire(queuedEvents[i]);
+            queuedEvents.RemoveAt(i);
         }
+    }
 
-        private Dictionary<System.Type, Event.Handler> registeredHandlers
-            = new Dictionary<System.Type, Event.Handler>();
-        private List<Event> queuedEvents = new List<Event>();
-
-        public void QueueEvent(Event e)
+    public void Register<T>(Event.Handler handler) where T : Event
+    {
+        System.Type t = typeof(T);
+        if (registeredHandlers.ContainsKey(t))
         {
-            queuedEvents.Insert(0, e);
+            registeredHandlers[t] += handler;
         }
-
-        public void ProcessQueuedEvents()
+        else
         {
-            for (int i = queuedEvents.Count - 1; i >= 0; --i)
-            {
-                Fire(queuedEvents[i]);
-                queuedEvents.RemoveAt(i);
-            }
+            registeredHandlers[t] = handler;
         }
+    }
 
-        public void Register<T>(Event.Handler handler) where T : Event
+    public void Unregister<T>(Event.Handler handler) where T : Event
+    {
+        System.Type type = typeof(Event);
+        Event.Handler handlers;
+        if (registeredHandlers.TryGetValue(type, out handlers))
         {
-            System.Type t = typeof(T);
-            if (registeredHandlers.ContainsKey(t))
+            handlers -= handler;
+            if (handler == null)
             {
-                registeredHandlers[t] += handler;
+                registeredHandlers.Remove(type);
             }
             else
             {
-                registeredHandlers[t] = handler;
+                registeredHandlers[type] = handlers;
             }
         }
+    }
 
-        public void Unregister<T>(Event.Handler handler) where T : Event
+    public void Fire(Event e)
+    {
+        System.Type type = e.GetType();
+        Event.Handler handlers;
+        if (registeredHandlers.TryGetValue(type, out handlers))
         {
-            System.Type type = typeof(Event);
-            Event.Handler handlers;
-            if (registeredHandlers.TryGetValue(type, out handlers))
-            {
-                handlers -= handler;
-                if (handler == null)
-                {
-                    registeredHandlers.Remove(type);
-                }
-                else
-                {
-                    registeredHandlers[type] = handlers;
-                }
-            }
-        }
-
-        public void Fire(Event e)
-        {
-            System.Type type = e.GetType();
-            Event.Handler handlers;
-            if (registeredHandlers.TryGetValue(type, out handlers))
-            {
-                handlers(e);
-            }
+            handlers(e);
         }
     }
 }

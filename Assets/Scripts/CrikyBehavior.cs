@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GM;
 
 public class CrikyBehavior : EnemyBehavior
 {
@@ -13,7 +12,7 @@ public class CrikyBehavior : EnemyBehavior
         Init();
         InitBehaviorTree();
         PlaySound(MainControl.SoundsRef.CRIKY_CREATE);
-        EventManager.Instance.Register<EnemyDestroyed>(OnEnemyDestroyed);
+        Services.events.Register<EnemyDestroyed>(OnEnemyDestroyed);
     }
 
     // Update is called once per frame
@@ -27,11 +26,11 @@ public class CrikyBehavior : EnemyBehavior
 
     void OnDestroy()
     {
-        EventManager.Instance.QueueEvent(new EnemyDestroyed(gameObject));
-        EventManager.Instance.Unregister<EnemyDestroyed>(OnEnemyDestroyed);
+        Services.events.QueueEvent(new EnemyDestroyed(gameObject));
+        Services.events.Unregister<EnemyDestroyed>(OnEnemyDestroyed);
     }
 
-    void OnEnemyDestroyed(GM.Event e)
+    void OnEnemyDestroyed(Event e)
     {
         var enemyDestroyedEvent = e as EnemyDestroyed;
         speed += 0.1f;
