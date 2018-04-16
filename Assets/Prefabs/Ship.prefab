@@ -37,9 +37,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134159790898396}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.03, y: -3.4, z: 0}
+  m_LocalScale: {x: 0.39999998, y: 0.39999998, z: 0.39999998}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,7 +96,7 @@ TrailRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134159790898396}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -124,7 +124,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 15
+  m_Time: 4
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 1
@@ -177,8 +177,8 @@ TrailRenderer:
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
-    alignment: 0
-    textureMode: 1
+    alignment: 1
+    textureMode: 2
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
@@ -193,11 +193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827fef3499653d14ea058f5b273da61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlScheme: 0
-  moveSpeed: 3
+  moveSpeed: 10
   rotationSpeed: 5
-  bulletSpeed: 30
-  fireCD: 0.02
+  bulletSpeed: 20
+  fireCD: 0.3
 --- !u!212 &212510452699562902
 SpriteRenderer:
   m_ObjectHideFlags: 1

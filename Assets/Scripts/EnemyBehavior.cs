@@ -21,6 +21,7 @@ public class EnemyBehavior : MonoBehaviour
     public float patternRadius = 1f;
     public float bulletSpeed = 10f;
     public float fireCD = 2f;
+    public bool canFire = true;
 
     [Header("Debug")]
     [SerializeField]
@@ -214,7 +215,10 @@ public class EnemyBehavior : MonoBehaviour
         public override bool Update(EnemyBehavior enemy)
         {
             //enemy.SetColor(Color.red);
-            enemy.Fire();
+            if (enemy.canFire)
+            {
+                enemy.Fire();
+            }
             return true;
         }
     }

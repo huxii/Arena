@@ -33,7 +33,7 @@ public class BombyBehavior : EnemyBehavior
 	// Update is called once per frame
 	void Update ()
     {
-        Debug.Log(hp);
+        //Debug.Log(hp);
         StateCheck();
         MoveAsPattern();
     }
@@ -96,7 +96,6 @@ public class BombyBehavior : EnemyBehavior
         if (hp <= maxHP * 0.5)
         {
             state = BossState.FIRE;
-            gameController.ClearEnemy();
         }
     }
 }

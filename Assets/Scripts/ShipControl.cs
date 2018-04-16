@@ -9,6 +9,7 @@ public class ShipControl : MonoBehaviour
     public float rotationSpeed = 1f;
     public float bulletSpeed = 10f;
     public float fireCD = 0.2f;
+    public bool canFire = true;
 
     [Header("Debug")]
     MainControl gameController;
@@ -53,12 +54,15 @@ public class ShipControl : MonoBehaviour
 
         rb.velocity = v;
 
-        if (Input.GetMouseButton(0))
+        if (canFire)
         {
-            if (fireCDTimer <= 0)
+            if (Input.GetMouseButton(0))
             {
-                gameController.FireAt(MainControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
-                fireCDTimer = fireCD;
+                if (fireCDTimer <= 0)
+                {
+                    gameController.FireAt(MainControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
+                    fireCDTimer = fireCD;
+                }
             }
         }
     }
@@ -98,12 +102,15 @@ public class ShipControl : MonoBehaviour
 
         rb.velocity = v;
 
-        if (Input.GetKey(KeyCode.Space))
+        if (canFire)
         {
-            if (fireCDTimer <= 0)
+            if (Input.GetKey(KeyCode.Space))
             {
-                gameController.FireAt(MainControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
-                fireCDTimer = fireCD;
+                if (fireCDTimer <= 0)
+                {
+                    gameController.FireAt(MainControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
+                    fireCDTimer = fireCD;
+                }
             }
         }
     }

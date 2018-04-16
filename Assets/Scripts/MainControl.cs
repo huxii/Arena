@@ -37,7 +37,7 @@ public class MainControl : MonoBehaviour
     public float spawnX = 8f;
     public float spawnY = 5f;
 
-    float enemyNum; 
+    float enemyNum;
 
     // Use this for initialization
     void Awake ()
@@ -46,15 +46,12 @@ public class MainControl : MonoBehaviour
         Services.tasks = new TaskManager();
         Services.events = new EventManager();
         Services.scenes = new SceneManager<TransitionData>(gameObject, scenePrefabs);
+
+        Services.scenes.PushScene<GameMenuScene>();
     }
 
     void Start()
     {
-        GameObject[] enemyTrash = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemyTrash)
-        {
-            Destroy(enemy);
-        }
     }
 	
 	// Update is called once per frame
@@ -63,7 +60,7 @@ public class MainControl : MonoBehaviour
         Services.events.ProcessQueuedEvents();
         Services.tasks.Update();
 
-        SpawnEnemy();
+        //SpawnEnemy();
     }
 
     public void FireAt(BulletRef bulletIdx, Vector3 pos, Vector3 dir, float bulletSpeed)
@@ -117,15 +114,6 @@ public class MainControl : MonoBehaviour
             angle += 60;
         }
     }
-
-    public void ClearEnemy()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
-        {
-            Destroy(enemy);
-        }
-    }
 }
 
 
@@ -139,4 +127,4 @@ public class MainControl : MonoBehaviour
  *      EnemyBehavior                   BulletBehavior
  *      /           \
  * SharkyBehavior  FishyBehavior
- */
+ */ 
