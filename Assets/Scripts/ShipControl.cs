@@ -64,6 +64,15 @@ public class ShipControl : MonoBehaviour
                     fireCDTimer = fireCD;
                 }
             }
+            else
+            if (Input.GetMouseButton(1))
+            {
+                if (fireCDTimer <= 0)
+                {
+                    gameController.FireAt(MainControl.BulletRef.PLAYER_SLEEP, transform.position, ShipForwardDirection(), bulletSpeed);
+                    fireCDTimer = fireCD;
+                }
+            }
         }
     }
     

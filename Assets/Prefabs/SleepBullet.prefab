@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212321718497463310}
   - component: {fileID: 50150864871649630}
   - component: {fileID: 58247033537115140}
-  - component: {fileID: 114826550471153666}
+  - component: {fileID: 114590983533317574}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: SleepBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
---- !u!114 &114826550471153666
+--- !u!114 &114590983533317574
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -86,9 +86,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1111377228069194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96cf7f841195ffd4db520a5c9ac3e9db, type: 3}
+  m_Script: {fileID: 11500000, guid: 715ab0f565d7df94aa317bd44ac1818a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sleeptDuration: 2
 --- !u!212 &212321718497463310
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -123,7 +124,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

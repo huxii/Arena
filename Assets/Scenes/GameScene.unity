@@ -151,6 +151,7 @@ MonoBehaviour:
   bulletPrefabs:
   - {fileID: 1111377228069194, guid: ebb6c7ba45d3d744aac0d5e85b303048, type: 2}
   - {fileID: 1111377228069194, guid: f7cedc1ff8b50644b849aecfb63df726, type: 2}
+  - {fileID: 1111377228069194, guid: 24cf14dd0f344044195f716d56e1451e, type: 2}
   controlScheme: 1
   maxEnemyNum: 20
   spawnX: 8

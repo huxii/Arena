@@ -19,7 +19,7 @@ public class SharkyBehavior : EnemyBehavior
     {
         btree.Update(this);
         //MoveToPlayer();
-        MoveAsPattern();
+        //MoveAsPattern();
         //Fire();
     }
 
@@ -48,6 +48,11 @@ public class SharkyBehavior : EnemyBehavior
     public override void ReceiveDamage()
     {
         PlaySound(MainControl.SoundsRef.SHARKY_DESTROY);
-        Destroy(gameObject);
+        --hp;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+        sleepCDTimer = -1;
     }
 }

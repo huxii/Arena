@@ -24,6 +24,7 @@ public class MainControl : MonoBehaviour
     {
         PLAYER_NORMAL = 0,
         ENEMY_NORMAL = 1,
+        PLAYER_SLEEP = 2,
     };
 
     [Header("Prefabs")]

@@ -15,6 +15,7 @@ public class EnemyDestroyed : Event
 public class EnemyBehavior : MonoBehaviour
 {
     [Header("Attributes")]
+    public float maxHP = 10;
     public float fleeRange = 4f;
     public float attackRange = 6f;
     public float speed = 2f;
@@ -29,7 +30,9 @@ public class EnemyBehavior : MonoBehaviour
     protected GameObject player;
     protected Transform shipTrans;
     protected Tree<EnemyBehavior> btree;
-    
+    protected float hp = 0;
+    protected float sleepCDTimer = -1;
+
     float fireCDTimer = 0;
 
     // Use this for initialization
@@ -47,6 +50,7 @@ public class EnemyBehavior : MonoBehaviour
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
         shipTrans = transform.GetChild(0).transform;
         player = GameObject.FindGameObjectWithTag("Player");
+        hp = maxHP;
     }
 
     protected void InitBehaviorTree()
@@ -57,6 +61,11 @@ public class EnemyBehavior : MonoBehaviour
             // (highest priority)
             // Fight Behavior
             // If we don't need to run then fight...
+
+            new Sequence<EnemyBehavior>(
+                new Slept(),
+                new Sleeping()
+            ),
 
             // Flee Behavior
             new Sequence<EnemyBehavior>( // We use a sequence here since this is effectively a checklist...
@@ -147,6 +156,11 @@ public class EnemyBehavior : MonoBehaviour
     {
     }
 
+    public void BeSlept(float duration)
+    {
+        sleepCDTimer = duration;
+    }
+
     public virtual void ReceiveDamage()
     {
     }
@@ -163,6 +177,18 @@ public class EnemyBehavior : MonoBehaviour
     ////////////////////
     // Conditions
     ////////////////////
+    private class Slept : Node<EnemyBehavior>
+    {
+        public override bool Update(EnemyBehavior enemy)
+        {
+            if (enemy.sleepCDTimer > 0)
+            {
+                Debug.Log(enemy.name);
+            }
+            return enemy.sleepCDTimer > 0;
+        }
+    }
+
     private class ShouldFlee : Node<EnemyBehavior>
     {
         public override bool Update(EnemyBehavior enemy)
@@ -190,12 +216,25 @@ public class EnemyBehavior : MonoBehaviour
     ///////////////////
     /// Actions
     ///////////////////
+    ///
+
+    private class Sleeping : Node<EnemyBehavior>
+    {
+        public override bool Update(EnemyBehavior enemy)
+        {
+            enemy.sleepCDTimer -= Time.deltaTime;
+            return true;
+        }
+    }
+
     private class Flee : Node<EnemyBehavior>
     {
         public override bool Update(EnemyBehavior enemy)
         {
+            Debug.Log("flee");
             //enemy.SetColor(Color.yellow);
             enemy.MoveAwayFromPlayer();
+            enemy.MoveAsPattern();
             return true;
         }
     }
@@ -204,8 +243,10 @@ public class EnemyBehavior : MonoBehaviour
     {
         public override bool Update(EnemyBehavior enemy)
         {
+            Debug.Log("approach");
             //enemy.SetColor(Color.yellow);
             enemy.MoveTowardsPlayer();
+            enemy.MoveAsPattern();
             return true;
         }
     }
@@ -219,6 +260,7 @@ public class EnemyBehavior : MonoBehaviour
             {
                 enemy.Fire();
             }
+            enemy.MoveAsPattern();
             return true;
         }
     }

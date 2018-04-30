@@ -20,7 +20,7 @@ public class CrikyBehavior : EnemyBehavior
     {
         btree.Update(this);
         //MoveToPlayer();
-        MoveAsPattern();
+        //MoveAsPattern();
         //Fire();
     }
 
@@ -57,6 +57,11 @@ public class CrikyBehavior : EnemyBehavior
     public override void ReceiveDamage()
     {
         PlaySound(MainControl.SoundsRef.CRIKY_DESTROY);
-        Destroy(gameObject);
+        --hp;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+        sleepCDTimer = -1;
     }
 }

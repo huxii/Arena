@@ -10,8 +10,6 @@ public class BulletBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
     }
 
     // Update is called once per frame
@@ -20,19 +18,14 @@ public class BulletBehavior : MonoBehaviour
 
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log(other.gameObject.tag);
-        if (other.gameObject.CompareTag("Finish"))
-        {
-            Destroy(gameObject);
-        }
+    }
 
-        if (gameObject.CompareTag("Bullet") && (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss")))
-        {
-            other.transform.parent.gameObject.GetComponent<EnemyBehavior>().ReceiveDamage();
-            Destroy(gameObject);
-        }
+    protected void Init()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
     }
 
     public void SetDirection(Vector3 dir, float speed)

@@ -19,7 +19,7 @@ public class FishyBehavior : EnemyBehavior
     {
         btree.Update(this);
         //MoveToPlayer();
-        MoveAsPattern();
+        //MoveAsPattern();
         //Fire();
     }
 
@@ -49,6 +49,11 @@ public class FishyBehavior : EnemyBehavior
     public override void ReceiveDamage()
     {
         PlaySound(MainControl.SoundsRef.FISHY_DESTROY);
-        Destroy(gameObject);
+        --hp;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+        sleepCDTimer = -1;
     }
 }

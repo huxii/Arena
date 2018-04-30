@@ -12,13 +12,10 @@ public class BombyBehavior : EnemyBehavior
         CHASE,
     }
 
-    public float maxHP = 10;
-
     [SerializeField]
     BossState state = BossState.APPEAR;
     Vector3 location = new Vector3(0, 0, 0);
 
-    float hp;
     float timer = 0;
 
 	// Use this for initialization
@@ -27,7 +24,6 @@ public class BombyBehavior : EnemyBehavior
         Init();
 
         Services.tasks.Do(new Scale(gameObject, new Vector3(0.01f, 0.01f, 0.01f), new Vector3(1f, 1f, 1f), 1f));
-        hp = maxHP;
     }
 	
 	// Update is called once per frame
