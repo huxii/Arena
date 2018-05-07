@@ -10,22 +10,8 @@ public class MainControl : MonoBehaviour
         MOUSE = 1,
     };
 
-    public enum SoundsRef
-    {
-        FISHY_CREATE = 0,
-        FISHY_DESTROY = 1,
-        SHARKY_CREATE = 2,
-        SHARKY_DESTROY = 3,
-        CRIKY_CREATE = 4,
-        CRIKY_DESTROY = 5,
-    };
-
-    public enum BulletRef
-    {
-        PLAYER_NORMAL = 0,
-        ENEMY_NORMAL = 1,
-        PLAYER_SLEEP = 2,
-    };
+    public GameObject soundManager;
+    public GameObject bulletManager;
 
     [Header("Prefabs")]
     public List<GameObject> scenePrefabs;
@@ -43,7 +29,9 @@ public class MainControl : MonoBehaviour
     // Use this for initialization
     void Awake ()
     {
-        Services.sounds = GameObject.FindGameObjectWithTag("Sounds").GetComponent<SoundsControl>();
+        Services.gameController = this;
+        Services.soundController = soundManager.GetComponent<SoundsControl>();
+        Services.bulletController = bulletManager.GetComponent<BulletControl>();
         Services.tasks = new TaskManager();
         Services.events = new EventManager();
         Services.scenes = new SceneManager<TransitionData>(gameObject, scenePrefabs);
@@ -62,17 +50,6 @@ public class MainControl : MonoBehaviour
         Services.tasks.Update();
 
         //SpawnEnemy();
-    }
-
-    public void FireAt(BulletRef bulletIdx, Vector3 pos, Vector3 dir, float bulletSpeed)
-    {
-        GameObject bullet = Instantiate(bulletPrefabs[(int)bulletIdx], pos, Quaternion.identity);
-        bullet.GetComponent<BulletBehavior>().SetDirection(dir, bulletSpeed);
-    }
-
-    public void PlaySound(SoundsRef idx)
-    {
-        Services.sounds.Play((int)idx);
     }
 
     public void SpawnEnemy()
@@ -110,7 +87,7 @@ public class MainControl : MonoBehaviour
             float angle = Random.Range(0, 360);
             float x = Mathf.Cos(angle);
             float y = Mathf.Sin(angle);
-            GameObject bullet = Instantiate(bulletPrefabs[(int)BulletRef.ENEMY_NORMAL], pos, Quaternion.identity);
+            GameObject bullet = Instantiate(bulletPrefabs[(int)BulletControl.BulletRef.ENEMY_NORMAL], pos, Quaternion.identity);
             bullet.GetComponent<BulletBehavior>().SetDirection(new Vector3(x, y, 0), 3f);
             angle += 60;
         }

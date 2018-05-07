@@ -11,7 +11,7 @@ public class CrikyBehavior : EnemyBehavior
     {
         Init();
         InitBehaviorTree();
-        PlaySound(MainControl.SoundsRef.CRIKY_CREATE);
+        PlaySound(SoundsControl.SoundsRef.CRIKY_CREATE);
         Services.events.Register<EnemyDestroyed>(OnEnemyDestroyed);
     }
 
@@ -56,7 +56,7 @@ public class CrikyBehavior : EnemyBehavior
 
     public override void ReceiveDamage()
     {
-        PlaySound(MainControl.SoundsRef.CRIKY_DESTROY);
+        PlaySound(SoundsControl.SoundsRef.CRIKY_DESTROY);
         --hp;
         if (hp <= 0)
         {

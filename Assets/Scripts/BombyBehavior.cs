@@ -45,19 +45,19 @@ public class BombyBehavior : EnemyBehavior
                 }
                 break;
             case BossState.SPAWN:
-                gameController.SpawnEnemy(transform.position);
+                Services.gameController.SpawnEnemy(transform.position);
                 break;
             case BossState.FIRE:
                 timer -= Time.deltaTime;
                 if (timer <= 0)
                 {
-                    gameController.SpawnBullet(transform.position);
+                    Services.gameController.SpawnBullet(transform.position);
                     timer = 2f;
                 }
                 break;
             case BossState.CHASE:
                 MoveTowardsPlayer();
-                gameController.SpawnEnemy(transform.position);
+                Services.gameController.SpawnEnemy(transform.position);
                 break;
         }
     }
@@ -80,7 +80,7 @@ public class BombyBehavior : EnemyBehavior
         --hp;
         if (hp == 0)
         {
-            PlaySound(MainControl.SoundsRef.FISHY_DESTROY);
+            PlaySound(SoundsControl.SoundsRef.FISHY_DESTROY);
             Destroy(gameObject);
         }
         else

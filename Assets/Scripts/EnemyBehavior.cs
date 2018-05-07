@@ -26,7 +26,6 @@ public class EnemyBehavior : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField]
-    protected MainControl gameController;
     protected GameObject player;
     protected Transform shipTrans;
     protected Tree<EnemyBehavior> btree;
@@ -47,7 +46,6 @@ public class EnemyBehavior : MonoBehaviour
 
     protected void Init()
     {
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
         shipTrans = transform.GetChild(0).transform;
         player = GameObject.FindGameObjectWithTag("Player");
         hp = maxHP;
@@ -133,7 +131,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (fireCDTimer <= 0)
         {
-            gameController.FireAt(MainControl.BulletRef.ENEMY_NORMAL, transform.position, player.transform.position - transform.position, bulletSpeed);
+            Services.bulletController.FireAt(BulletControl.BulletRef.ENEMY_NORMAL, transform.position, player.transform.position - transform.position, bulletSpeed);
             fireCDTimer = fireCD;
         }
         else
@@ -143,9 +141,9 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    protected void PlaySound(MainControl.SoundsRef idx)
+    protected void PlaySound(SoundsControl.SoundsRef idx)
     {
-        gameController.PlaySound(idx);
+        Services.soundController.Play((int)idx);
     }
 
     protected virtual void MoveAsPattern()

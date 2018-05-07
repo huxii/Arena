@@ -12,14 +12,12 @@ public class ShipControl : MonoBehaviour
     public bool canFire = true;
 
     [Header("Debug")]
-    MainControl gameController;
     Rigidbody2D rb;
     float fireCDTimer;
 
 	// Use this for initialization
 	void Start ()
     {
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<MainControl>();
         rb = GetComponent<Rigidbody2D>();
         fireCDTimer = 0;
     }
@@ -32,7 +30,7 @@ public class ShipControl : MonoBehaviour
             fireCDTimer -= Time.deltaTime;
         }
         
-        switch (gameController.controlScheme)
+        switch (Services.gameController.controlScheme)
         {
             case MainControl.ControlScheme.KEYBOARD:
                 KeyboardUpdate();
@@ -60,7 +58,7 @@ public class ShipControl : MonoBehaviour
             {
                 if (fireCDTimer <= 0)
                 {
-                    gameController.FireAt(MainControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
+                    Services.bulletController.FireAt(BulletControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
                     fireCDTimer = fireCD;
                 }
             }
@@ -69,7 +67,7 @@ public class ShipControl : MonoBehaviour
             {
                 if (fireCDTimer <= 0)
                 {
-                    gameController.FireAt(MainControl.BulletRef.PLAYER_SLEEP, transform.position, ShipForwardDirection(), bulletSpeed);
+                    Services.bulletController.FireAt(BulletControl.BulletRef.PLAYER_SLEEP, transform.position, ShipForwardDirection(), bulletSpeed);
                     fireCDTimer = fireCD;
                 }
             }
@@ -117,7 +115,7 @@ public class ShipControl : MonoBehaviour
             {
                 if (fireCDTimer <= 0)
                 {
-                    gameController.FireAt(MainControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
+                    Services.bulletController.FireAt(BulletControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
                     fireCDTimer = fireCD;
                 }
             }
