@@ -243,13 +243,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0639d81990111fb4783227efc6e55956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 3
   fleeRange: 2
   attackRange: 3
   speed: 2
   patternRadius: 3
   bulletSpeed: 3
   fireCD: 2
-  gameController: {fileID: 0}
+  canFire: 1
+  player: {fileID: 0}
 --- !u!212 &212745782283873526
 SpriteRenderer:
   m_ObjectHideFlags: 1

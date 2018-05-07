@@ -165,7 +165,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log(other.gameObject.name);
+        //Debug.Log(other.gameObject.name);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             if (enemy.sleepCDTimer > 0)
             {
-                Debug.Log(enemy.name);
+                //Debug.Log(enemy.name);
             }
             return enemy.sleepCDTimer > 0;
         }
@@ -229,7 +229,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         public override bool Update(EnemyBehavior enemy)
         {
-            Debug.Log("flee");
+            //Debug.Log("flee");
             //enemy.SetColor(Color.yellow);
             enemy.MoveAwayFromPlayer();
             enemy.MoveAsPattern();
@@ -241,7 +241,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         public override bool Update(EnemyBehavior enemy)
         {
-            Debug.Log("approach");
+            //Debug.Log("approach");
             //enemy.SetColor(Color.yellow);
             enemy.MoveTowardsPlayer();
             enemy.MoveAsPattern();

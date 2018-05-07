@@ -45,19 +45,19 @@ public class BombyBehavior : EnemyBehavior
                 }
                 break;
             case BossState.SPAWN:
-                Services.gameController.SpawnEnemy(transform.position);
+                Services.enemyController.SpawnEnemy(transform.position);
                 break;
             case BossState.FIRE:
                 timer -= Time.deltaTime;
                 if (timer <= 0)
                 {
-                    Services.gameController.SpawnBullet(transform.position);
+                    Services.bulletController.FireAround(BulletControl.BulletRef.ENEMY_NORMAL, transform.position);
                     timer = 2f;
                 }
                 break;
             case BossState.CHASE:
                 MoveTowardsPlayer();
-                Services.gameController.SpawnEnemy(transform.position);
+                Services.enemyController.SpawnEnemy(transform.position);
                 break;
         }
     }

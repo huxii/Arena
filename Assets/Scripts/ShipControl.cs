@@ -14,12 +14,14 @@ public class ShipControl : MonoBehaviour
     [Header("Debug")]
     Rigidbody2D rb;
     float fireCDTimer;
+    float fireHoldTimer;
 
 	// Use this for initialization
 	void Start ()
     {
         rb = GetComponent<Rigidbody2D>();
         fireCDTimer = 0;
+        fireHoldTimer = 0;
     }
 	
 	// Update is called once per frame
@@ -54,21 +56,35 @@ public class ShipControl : MonoBehaviour
 
         if (canFire)
         {
-            if (Input.GetMouseButton(0))
+            if (fireCDTimer <= 0)
             {
-                if (fireCDTimer <= 0)
+                if (Input.GetMouseButton(0))
                 {
                     Services.bulletController.FireAt(BulletControl.BulletRef.PLAYER_NORMAL, transform.position, ShipForwardDirection(), bulletSpeed);
                     fireCDTimer = fireCD;
                 }
-            }
-            else
-            if (Input.GetMouseButton(1))
-            {
-                if (fireCDTimer <= 0)
+                else
+                if (Input.GetMouseButton(1))
                 {
-                    Services.bulletController.FireAt(BulletControl.BulletRef.PLAYER_SLEEP, transform.position, ShipForwardDirection(), bulletSpeed);
-                    fireCDTimer = fireCD;
+                    fireHoldTimer += Time.deltaTime;
+                }
+                else
+                if (Input.GetMouseButtonUp(1))
+                {
+                    Debug.Log(fireHoldTimer);
+                    if (fireHoldTimer > 1f)
+                    {
+                        Services.bulletController.FireAround(BulletControl.BulletRef.PLAYER_SLEEP, transform.position, bulletSpeed * 0.3f, 60f);
+                        fireCDTimer = 0;
+                    }
+                    else
+                    if (fireHoldTimer > 0)
+                    {
+                        Services.bulletController.FireAt(BulletControl.BulletRef.PLAYER_SLEEP, transform.position, ShipForwardDirection(), bulletSpeed);
+                        fireCDTimer = fireCD;
+                    }
+
+                    fireHoldTimer = 0;
                 }
             }
         }

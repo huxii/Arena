@@ -140,22 +140,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19d9eaa8ba7b70c45bcd1f23e205ef20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 1680373070}
+  bulletManager: {fileID: 664804374}
+  enemyManager: {fileID: 1957907650}
   scenePrefabs:
   - {fileID: 1416269818653604, guid: 605f566fd733d7d4a817f6335c83690f, type: 2}
   - {fileID: 1101826850859956, guid: 901ce62e8cca1d74cbb6cc672d19f0da, type: 2}
   - {fileID: 1297485513374544, guid: 170b918de182f7648921b1a62ad53cd6, type: 2}
-  enemyPrefabs:
-  - {fileID: 1359326071519596, guid: d04e22f2e0c71074aa83c6ab747c4e1a, type: 2}
-  - {fileID: 1964315678091014, guid: d5d6b29f0e1967046b31edb2492093d6, type: 2}
-  - {fileID: 1209168703520182, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
-  bulletPrefabs:
-  - {fileID: 1111377228069194, guid: ebb6c7ba45d3d744aac0d5e85b303048, type: 2}
-  - {fileID: 1111377228069194, guid: f7cedc1ff8b50644b849aecfb63df726, type: 2}
-  - {fileID: 1111377228069194, guid: 24cf14dd0f344044195f716d56e1451e, type: 2}
   controlScheme: 1
-  maxEnemyNum: 20
-  spawnX: 8
-  spawnY: 5
 --- !u!4 &518486836
 Transform:
   m_ObjectHideFlags: 0
@@ -167,6 +159,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1680373071}
+  - {fileID: 664804375}
+  - {fileID: 1957907651}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -251,6 +245,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &664804374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 664804375}
+  - component: {fileID: 664804376}
+  m_Layer: 0
+  m_Name: BulletManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &664804375
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664804374}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 518486836}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &664804376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664804374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32640aa62be0f54184e453d2c6ae10e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefabs:
+  - {fileID: 1111377228069194, guid: ebb6c7ba45d3d744aac0d5e85b303048, type: 2}
+  - {fileID: 1111377228069194, guid: f7cedc1ff8b50644b849aecfb63df726, type: 2}
+  - {fileID: 1111377228069194, guid: 24cf14dd0f344044195f716d56e1451e, type: 2}
 --- !u!1 &1565665773
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +368,7 @@ GameObject:
   - component: {fileID: 1680373076}
   m_Layer: 0
   m_Name: SoundsManager
-  m_TagString: Sounds
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -415,7 +453,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -495,7 +533,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -575,7 +613,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -655,7 +693,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -747,7 +785,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -827,7 +865,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -840,6 +878,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!1 &1957907650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1957907651}
+  - component: {fileID: 1957907652}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1957907651
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1957907650}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 518486836}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1957907652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1957907650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2843aa69ee5a81a41afd8aa9dd7623a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEnemyNum: 5
+  spawnX: 8
+  spawnY: 5
+  enemyPrefabs:
+  - {fileID: 1209168703520182, guid: f11791bc225fcc844ba39252d1a566b5, type: 2}
+  - {fileID: 1359326071519596, guid: d04e22f2e0c71074aa83c6ab747c4e1a, type: 2}
+  - {fileID: 1964315678091014, guid: d5d6b29f0e1967046b31edb2492093d6, type: 2}
 --- !u!1001 &1993474702
 Prefab:
   m_ObjectHideFlags: 0
